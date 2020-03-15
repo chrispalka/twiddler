@@ -42,9 +42,21 @@ var generateRandomTweet = function(){
   var tweet = {};
   tweet.user = randomElement(users);
   tweet.message = randomMessage();
-  tweet.created_at = new Date();
+  tweet.created_at = formattedDate();
   addTweet(tweet);
 };
+
+var formattedDate = function() {
+  var date = new Date();
+  let year = date.getFullYear();
+  let month = (1 + date.getMonth()).toString().padStart(2, '0');
+  let day = date.getDate().toString().padStart(2, '0');
+  let hours = date.getHours() > 12 ? date.getHours() - 12 : date.getHours();
+  let am_pm = date.getHours() >= 12 ? "PM" : "AM";
+  hours = hours < 10 ? "0" + hours : hours;
+  let minutes = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
+  return `${month}-${day}-${year} ${hours}:${minutes} ${am_pm}`;
+}
 
 for(var i = 0; i < 10; i++){
   generateRandomTweet();

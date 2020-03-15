@@ -1,15 +1,20 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel='stylesheet' href='stylesheet.css'>
     <script src="jquery.js"></script>
     <script src="data_generator.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    
   </head>
   <body>
     <script>
 
       $(document).ready(function(){
-        $('body').html('');
+        $('#tweets').html('');
 
         window.tweetIndex = 0;
         window.tweets = streams.home;
@@ -19,20 +24,32 @@
       var displayTweets = function() {
         while(tweetIndex < tweets.length){
           var tweet = tweets[tweetIndex];
-          var $tweet = $(`<div onClick=displayUserTweet('${tweet.user}')></div>`);
-          $tweet.text('@' + tweet.user + ': ' + tweet.message + ': ' + tweet.created_at);
-          $tweet.appendTo($('body'));
+          var $tweet = $(`<p class=tweet onClick=displayUserTweet('${tweet.user}')></p>`);
+          var $tweetMessage = $('<p class=tweetmessage></p>');
+          $tweet.text('@' + tweet.user + ' - ' + tweet.created_at);
+          $tweet.appendTo($('#tweets'));
+          $tweetMessage.text(tweet.message)
+          $tweetMessage.appendTo($('#tweets'))
           tweetIndex += 1;
         }
       }
       var displayUserTweet = function (username) {
-            $('body').html('');
+            $('#tweets').html('');
             window.tweets = streams.users[username];
             window.tweetIndex = 0;
             displayTweets();
           }
       setInterval(displayTweets, 1500);
     </script>
+    <div class="container">
+      <div class="row">
+          <h1>Twiddler</h1>
+      </div>
+      <div class="row">
+        <div class="col-sm" id="tweets">
+        </div>
+      </div>
+    </div>
   </body>
 </html>
 
