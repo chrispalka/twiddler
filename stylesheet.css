@@ -24,6 +24,11 @@ p.tweet {
     margin-bottom: 0;
 }
 
+.tweet:hover {
+    color: white;
+    cursor: pointer;
+}
+
 p.tweetmessage {
     margin-top: 0;
 }
